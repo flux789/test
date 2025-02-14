@@ -48,7 +48,7 @@ bms_version = ''
 bms_sn = ''
 pack_sn = ''
 packs = 1
-cells = 13
+cells = 16
 temps = 6
 
 
@@ -736,15 +736,21 @@ def bms_getAnalogData(bms,batNumber):
 
             #Possible remove this next test as were now testing for the INFOFLAG at the end
             if p > 1:
-                if cells != cells_prev:
-                    byte_index += 2
-                    cells = int(inc_data[byte_index:byte_index+2],16)
-                    if cells != cells_prev:
-                        print("Error parsing BMS analog data: Cannot read multiple packs")
-                        return(False,"Error parsing BMS analog data: Cannot read multiple packs")
+            # Check for INFOFLAG before reading cell count
+            potential_flag = int(inc_data[byte_index:byte_index+2], 16)
+            if potential_flag != cells:  # Expected cell count mismatch
+            byte_index += 2  # Skip INFOFLAG
+            cells = int(inc_data[byte_index:byte_index+2], 16)
+            byte_index += 2
+              #  if cells != cells_prev:
+               #     byte_index += 2
+                #    cells = int(inc_data[byte_index:byte_index+2],16)
+                   if cells != cells_prev:
+                       print("Error parsing BMS analog data: Cannot read multiple packs")
+                    return(False,"Error parsing BMS analog data: Cannot read multiple packs")
 
-            if print_initial:
-                print("Pack " + str(p) + ", Total cells: " + str(cells))
+           if print_initial:
+            print("Pack " + str(p) + ", Total cells: " + str(cells))
             byte_index += 2
             
             cell_min_volt = 0
