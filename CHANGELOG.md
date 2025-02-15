@@ -9,6 +9,7 @@ Additional data is now being retrieved, including warning, balancing, status ind
 This script excludes COMMANDS and should only retrieve data. Nonetheless the author accepts no reponsibility whatsoever of your use, in any way, of this script / addon. Again, USE AT OWN RISK!
 <br>
 <h1>Changelog</h1>
+<h2>Test</h2>
 <h2>v2.2.0</h2>
 Added a calculated cell maximum voltage difference (highest cell voltage - smallest cell voltage)
 Rewrite Dockerfile to cache library dependencies to speed up future builds. (thanks jpmeijers)
